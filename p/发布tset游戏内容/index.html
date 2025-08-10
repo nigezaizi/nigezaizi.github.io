@@ -290,53 +290,56 @@
      
     
         
-    <script src="https://utteranc.es/client.js" 
-        repo="nigezaizi/nigezaizi.github.io"
-        issue-term="pathname"
-        
-        label="💬"
-        
-        crossorigin="anonymous"
-        async
-        >
-</script>
-
-<style>
-    .utterances {
-        max-width: unset;
-    }
-</style>
-
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="nigezaizi/nigezaizi.github.io"
+    data-repo-id="79214313"
+    data-category="learning"
+    data-category-id=""
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
 <script>
-    let utterancesLoaded = false;
-
-    function setUtterancesTheme(theme) {
-        let utterances = document.querySelector('.utterances iframe');
-        if (utterances) {
-            utterances.contentWindow.postMessage(
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
                 {
-                    type: 'set-theme',
-                    theme: `github-${theme}`
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
                 },
-                'https://utteranc.es'
+                "https://giscus.app"
             );
         }
     }
 
-    addEventListener('message', event => {
-        if (event.origin !== 'https://utteranc.es') return;
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
 
-        
-        utterancesLoaded = true;
-        setUtterancesTheme(document.documentElement.dataset.scheme)
-    });
-
-    window.addEventListener('onColorSchemeChange', (e) => {
-        if (!utterancesLoaded) return;
-        setUtterancesTheme(e.detail)
-    })
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
 </script>
-
 
     
 
